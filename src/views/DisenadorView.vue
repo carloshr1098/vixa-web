@@ -74,7 +74,7 @@ const enlaceWhatsApp = computed(() => {
 
   const mensaje = `¡Hola equipo de VIXA! 👋\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n*📌 Proyecto:* ${instalacionNombre}\n*📏 Medidas:* ${p.medidas.ancho} cm x ${p.medidas.alto} cm\n*📐 Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}\n*🪟 Vidrio Elegido:* ${p.tipoVidrio}\n\n¿Me podrían apoyar con la cotización?`
   
-return `https://wa.me/522299782548?text=${encodeURIComponent(mensaje)}`
+return `https://wa.me/5212299782548?text=${encodeURIComponent(mensaje)}`
 })
 </script>
 
