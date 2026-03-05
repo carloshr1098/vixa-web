@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nombre": "SUCURSAL XALAPA (MATRIZ)",
+    "coords": [19.5432, -96.9273],
+    "direccion": "Av. 5 de Mayo #215, Col. Lagunilla, C.P. 91190, Xalapa, Ver.",
+    "telefonoDisplay": "(228) 815-1150",
+    "telefonoLink": "+522288151150",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.5432,-96.9273"
+  },
+  {
+    "id": 2,
+    "nombre": "FÁBRICA VIXA (PUERTO)",
+    "coords": [19.1416, -96.1856],
+    "direccion": "Av. Arrayanes Mz 16 A Lt 6, Cd. Industrial Bruno Pagliai, Veracruz, Ver.",
+    "telefonoDisplay": "(229) 920-8830",
+    "telefonoLink": "+522299208830",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1416,-96.1856"
+  },
+  {
+    "id": 3,
+    "nombre": "SUCURSAL VERACRUZ CENTRO",
+    "coords": [19.1833, -96.1333],
+    "direccion": "Cuauhtémoc 3434, Col. Centro, C.P. 91700, Veracruz, Ver.",
+    "telefonoDisplay": "(229) 198-0876",
+    "telefonoLink": "+522291980876",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1833,-96.1333"
+  },
+  {
+    "id": 4,
+    "nombre": "SUCURSAL CÓRDOBA",
+    "coords": [18.8833, -96.9333],
+    "direccion": "Calle 3 No. Ext. B, Col. San Nicolás, C.P. 94540, Córdoba, Ver.",
+    "telefonoDisplay": "(271) 717-5807",
+    "telefonoLink": "+522717175807",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=18.8833,-96.9333"
+  }
+]
