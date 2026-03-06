@@ -69,6 +69,34 @@ const familiasVidrio: Familia[] = [
     ]
   },
   {
+    id: 'CoolLite',
+    nombre: 'Cool-Lite',
+    desc: 'Cristal de control solar avanzado con estética neutra y alta transmisión luminosa.',
+    espesores: ['6mm', '10mm'],
+    variantes: [
+      { nombre: 'Cool-Lite Claro', clase: 'bg-slate-100 border border-slate-300' },
+      { nombre: 'Cool-Lite Neutro', clase: 'bg-slate-400' }
+    ]
+  },
+  {
+    id: 'Timeless',
+    nombre: 'Timeless',
+    desc: 'Vidrio anticorrosión diseñado para baños. Fácil de limpiar y mantiene su brillo.',
+    espesores: ['6mm', '10mm'],
+    variantes: [
+      { nombre: 'Timeless Claro', clase: 'bg-white border-4 border-blue-50' }
+    ]
+  },
+  {
+    id: 'Bioclean',
+    nombre: 'Bioclean',
+    desc: 'Vidrio autolimpiable ideal para exteriores, domos y fachadas de difícil acceso.',
+    espesores: ['6mm', '10mm'],
+    variantes: [
+      { nombre: 'Bioclean Claro', clase: 'bg-cyan-50 border-2 border-cyan-200' }
+    ]
+  },
+  {
     id: 'Clasicos',
     nombre: 'Clásicos',
     desc: 'Vidrio claro y extra claro de alta resistencia.',
@@ -188,7 +216,7 @@ const enlaceWhatsApp = computed(() => {
            
            <div class="flex flex-wrap justify-center gap-8">
               <div v-for="v in familiaSeleccionada.variantes" :key="v.nombre" @click="seleccionarVariante(v.nombre)" class="group cursor-pointer flex flex-col items-center">
-                 <div :class="[v.clase, 'w-16 h-16 rounded-full shadow-inner ring-offset-4 transition-all duration-300', store.proyecto.tipoVidrio === v.nombre ? 'ring-2 ring-blue-600 scale-110' : 'hover:scale-105']"></div>
+                 <div :class="[v.clase, 'w-16 h-16 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] ring-offset-4 transition-all duration-300', store.proyecto.tipoVidrio === v.nombre ? 'ring-2 ring-blue-600 scale-110' : 'hover:scale-105']"></div>
                  <span :class="['mt-3 text-xs font-bold transition-colors', store.proyecto.tipoVidrio === v.nombre ? 'text-blue-600' : 'text-slate-500']">{{ v.nombre }}</span>
               </div>
            </div>
@@ -309,7 +337,6 @@ const enlaceWhatsApp = computed(() => {
         
         <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Regresar</button>
-          
           <a v-if="!paso4Incompleto" :href="enlaceWhatsApp" target="_blank" class="px-8 py-4 rounded-lg font-extrabold text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 w-full sm:w-auto justify-center animate-fade-in">
             <span>Enviar Cotización por WhatsApp</span>
           </a>
