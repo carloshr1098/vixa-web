@@ -61,7 +61,6 @@ const getImageUrl = (name: string) => {
               :alt="producto.nombre"
               class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110"
             />
-            <span v-else :class="producto.logoStyle">{{ producto.logoTxt }}</span>
           </div>
           
           <div class="p-6 flex flex-col flex-grow bg-white">
