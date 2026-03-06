@@ -32,14 +32,14 @@
     "nombre": "Vidrios de Color",
     "categoria": "Vidrio",
     "desc": "Gama entintada para diseño audaz y control de deslumbramiento en interiores.",
-    "logo": "laminado.png"
+    "logo": "colores.png"
   },
   {
     "id": 6,
     "nombre": "Vidrios Reflectivos",
     "categoria": "Vidrio",
     "desc": "Privacidad diurna y rechazo de calor solar con un elegante acabado espejo.",
-    "logo": "esmerilado.png"
+    "logo": "reflectivo.png"
   },
   {
     "id": 7,
@@ -94,7 +94,7 @@
     "id": 17,
     "nombre": "Herrajes Dorma",
     "categoria": "Herrajes",
-    "desc": "Frenos de piso y soluciones globales para control de acceso en puertas de cristal.",
+    "desc": "Frenos de piso y soluciones globales para control de acceso en puertas de vidrio.",
     "logo": "dorma.png"
   }
 ]
