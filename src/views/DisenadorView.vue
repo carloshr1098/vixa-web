@@ -188,8 +188,8 @@ const enlaceWhatsApp = computed(() => {
 
   // Preparamos el texto de los procesos seleccionados
   const procesosTexto = procesosSeleccionados.value.length > 0 
-    ? `\n* Procesos Extra:* ${procesosSeleccionados.value.join(', ')}` 
-    : '\n* Procesos Extra:* Ninguno'
+    ? `\n* Procesos:* ${procesosSeleccionados.value.join(', ')}` 
+    : '\n* Procesos:* Ninguno'
 
   const mensaje = `¡Hola equipo de VIXA!\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n* Proyecto:* ${instalacionNombre}\n* Vidrio Elegido:* ${p.tipoVidrio} (${p.detalles.espesor})\n* Medidas:* ${p.medidas.ancho} x ${p.medidas.alto} cm\n* Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}${procesosTexto}\n\n¿Me podrían apoyar con la cotización?`
   
@@ -417,7 +417,7 @@ const enlaceWhatsApp = computed(() => {
            
            <div class="pt-4 border-t border-slate-200 mt-2" v-if="['barandal', 'formas'].includes(store.proyecto.tipoInstalacion)">
              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Plantilla</p>
-             <p class="font-bold text-slate-800">{{ store.proyecto.detalles.plantilla === 'si' ? 'Se enviará plantilla' : 'No cuenta con plantilla' }}</p>
+             <p class="font-bold text-slate-800">{{ store.proyecto.detalles.plantilla === 'si' ? 'Se enviará plantilla' : 'No se requiere plantilla' }}</p>
            </div>
 
            <div class="pt-4 border-t border-slate-200 mt-2">
