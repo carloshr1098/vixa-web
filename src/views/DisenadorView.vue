@@ -68,14 +68,15 @@ const familiasVidrio: Familia[] = [
       { nombre: 'Parsol Verde', clase: 'bg-green-700' }
     ]
   },
-  {
+{
     id: 'CoolLite',
     nombre: 'Cool-Lite',
-    desc: 'Cristal de control solar avanzado con estética neutra y alta transmisión luminosa.',
-    espesores: ['6mm', '10mm'],
+    desc: 'Cristal de control solar avanzado. Nota: En templado solo disponible en 6mm.',
+    espesores: ['6mm'],
     variantes: [
-      { nombre: 'Cool-Lite Claro', clase: 'bg-slate-100 border border-slate-300' },
-      { nombre: 'Cool-Lite Neutro', clase: 'bg-slate-400' }
+      { nombre: 'Cool-Lite SKN', clase: 'bg-sky-100 border border-sky-200' },
+      { nombre: 'Cool-Lite ST', clase: 'bg-slate-300' },
+      { nombre: 'Cool-Lite Extreme', clase: 'bg-slate-700' }
     ]
   },
   {
