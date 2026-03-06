@@ -7,6 +7,7 @@ import DisenadorView from '../views/DisenadorView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {path: '/servicios',name: 'servicios',component: () => import('../views/ServiciosView.vue')},
     { path: '/', name: 'home', component: HomeView },
     { path: '/sucursales', name: 'sucursales', component: SucursalesView },
     { path: '/productos', name: 'productos', component: ProductosView },

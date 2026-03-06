@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import sucursalesData from '../data/sucursales.json' // Importamos el JSON externo
+import sucursalesData from '../data/sucursales.json'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -12,7 +12,7 @@ onMounted(() => {
   // Inicializamos el mapa centrado en el estado
   const map = L.map(mapContainer.value).setView([19.2, -96.5], 8)
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
     subdomains: 'abcd',
     maxZoom: 20
@@ -21,7 +21,18 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   // Iteramos el JSON importado
   sucursalesData.forEach(sucursal => {
     
-    // Armamos el HTML del globo (Popup) con los enlaces interactivos
+    // Armamos los teléfonos adicionales si existen
+// Armamos los teléfonos adicionales si existen
+    const telefonosExtraHTML = sucursal.telefonosAdicionales && sucursal.telefonosAdicionales.length > 0
+      ? sucursal.telefonosAdicionales.map((tel: string) => `
+          <br>
+          <a href="tel:+52${tel.replace(/\s/g, '')}" style="color: #2563eb; text-decoration: none; font-weight: 600;">
+            ${tel}
+          </a>
+        `).join('')
+      : '';
+
+    // Armamos el HTML del globo (Popup) insertando los extras
     const popupContent = `
       <div style="font-family: ui-sans-serif, system-ui, sans-serif; min-width: 220px;">
         <h3 style="font-weight: 800; color: #0f172a; margin-bottom: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px;">
@@ -29,10 +40,11 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         </h3>
         
         <p style="margin: 4px 0; color: #475569;">
-          <strong>📞 Teléfono:</strong><br>
+          <strong>📞 Teléfono(s):</strong><br>
           <a href="tel:${sucursal.telefonoLink}" style="color: #2563eb; text-decoration: none; font-weight: 600;">
             ${sucursal.telefonoDisplay}
           </a>
+          ${telefonosExtraHTML}
         </p>
         
         <p style="margin: 8px 0; color: #475569;">
@@ -78,7 +90,6 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 .leaflet-default-icon-path {
   background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png');
 }
-/* Estilo extra para que los popups se vean más limpios */
 .leaflet-popup-content-wrapper {
   border-radius: 12px;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

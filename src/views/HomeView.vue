@@ -95,4 +95,57 @@ Logística diseñada para el vidrio. Más que transporte, ofrecemos una solució
     </section>
 
   </div>
+  <div class="py-20 bg-slate-900 text-white"> 
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> 
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"> 
+       
+      <div class="space-y-10"> 
+        <div> 
+          <h2 class="text-3xl font-extrabold text-white mb-8">Sobre Nosotros</h2> 
+          <div class="pl-4 border-l-4 border-blue-500"> 
+            <h3 class="text-xl font-bold text-blue-400 mb-2">Nuestra Misión</h3> 
+
+            <p class="text-slate-300 leading-relaxed">Proveer
+soluciones arquitectónicas en vidrio de la más alta calidad, superando 
+las expectativas de nuestros clientes mediante tecnología de punta, 
+precisión milimétrica y un servicio excepcional.</p> 
+          </div> 
+        </div> 
+         
+        <div class="pl-4 border-l-4 border-blue-500"> 
+          <h3 class="text-xl font-bold text-blue-400 mb-2">Nuestra Visión</h3> 
+
+          <p class="text-slate-300 leading-relaxed">Ser la 
+procesadora de vidrio líder y el referente de innovación, calidad y 
+confianza para la industria de la construcción, impulsando el desarrollo
+arquitectónico de la región.</p> 
+        </div> 
+      </div> 
+
+
+      <div class="bg-slate-800 rounded-3xl border border-slate-700 text-center shadow-2xl overflow-hidden group"> 
+        
+        <div class="h-40 overflow-hidden border-b border-slate-700">
+          <img 
+            src="@/assets/banner-unete.png" 
+            alt="Proceso de Manufactura VIXA" 
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90"
+          >
+        </div>
+
+        <div class="p-10">
+          <h3 class="text-2xl font-bold text-white mb-4">Únete a nuestro equipo</h3> 
+
+          <p class="text-slate-300 mb-8 leading-relaxed">Estamos en constante crecimiento y buscamos talento apasionado por la calidad, la manufactura y el servicio. Si quieres formar parte de la familia VIXA, queremos conocerte.</p> 
+
+          <a href="mailto:rh@vixa.com?subject=Postulación%20Bolsa%20de%20Trabajo" class="inline-block w-full py-4 rounded-xl font-bold text-slate-900 bg-blue-400 hover:bg-blue-300 transform hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-blue-400/30"> 
+            Enviar mi Currículum 
+          </a> 
+        </div>
+
+      </div> 
+
+    </div> 
+  </div> 
+</div>
 </template>

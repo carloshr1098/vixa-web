@@ -1,42 +1,79 @@
 [
   {
     "id": 1,
-    "nombre": "SUCURSAL XALAPA (MATRIZ)",
+    "nombre": "SUCURSAL XALAPA",
     "coords": [19.5432, -96.9273],
-    "direccion": "Av. 5 de Mayo #215, Col. Lagunilla, C.P. 91190, Xalapa, Ver.",
-    "telefonoDisplay": "(228) 815-1150",
-    "telefonoLink": "+522288151150",
+    "direccion": "Av. México No.409, Col. Lagunilla C.P. 9119",
+    "telefonoDisplay": "228 189 5744",
+    "telefonoLink": "+522281895744",
     "email": "cotizacion@vixa.mx",
-    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.5432,-96.9273"
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.5432,-96.9273",
+    "telefonosAdicionales": ["228 826 0663", "228 153 9092"]
   },
   {
     "id": 2,
-    "nombre": "FÁBRICA VIXA (PUERTO)",
-    "coords": [19.1416, -96.1856],
-    "direccion": "Av. Arrayanes Mz 16 A Lt 6, Cd. Industrial Bruno Pagliai, Veracruz, Ver.",
-    "telefonoDisplay": "(229) 920-8830",
-    "telefonoLink": "+522299208830",
+    "nombre": "SUCURSAL VERACRUZ CENTRO",
+    "coords": [19.1833, -96.1333],
+    "direccion": "Av. Cuauhtémoc No. 3434, Col. Centro C.P. 91700",
+    "telefonoDisplay": "229 143 0065",
+    "telefonoLink": "+522291430065",
     "email": "cotizacion@vixa.mx",
-    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1416,-96.1856"
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1833,-96.1333",
+    "telefonosAdicionales": ["229 781 8022", "229 365 2217"]
   },
   {
     "id": 3,
-    "nombre": "SUCURSAL VERACRUZ CENTRO",
-    "coords": [19.1833, -96.1333],
-    "direccion": "Cuauhtémoc 3434, Col. Centro, C.P. 91700, Veracruz, Ver.",
-    "telefonoDisplay": "(229) 198-0876",
-    "telefonoLink": "+522291980876",
+    "nombre": "SUCURSAL BOCA DEL RIO",
+    "coords": [19.1000, -96.1000],
+    "direccion": "Via Muerta No. 3566, Col. Tampiquera, Boca del Rio C.P. 94290",
+    "telefonoDisplay": "229 447 5059",
+    "telefonoLink": "+522294475059",
     "email": "cotizacion@vixa.mx",
-    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1833,-96.1333"
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1000,-96.1000",
+    "telefonosAdicionales": ["228 236 4077"]
   },
   {
     "id": 4,
+    "nombre": "TEMPLADO Y PROCESOS",
+    "coords": [19.1416, -96.1856],
+    "direccion": "Av. Framboyanes No. 3335 Mz. VI Lt. 26, Cd. Industrial Bruno Pagliai, Veracruz C.P. 91697",
+    "telefonoDisplay": "229 982 0494",
+    "telefonoLink": "+522299820494",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=19.1416,-96.1856",
+    "telefonosAdicionales": ["229 325 0907"]
+  },
+  {
+    "id": 5,
     "nombre": "SUCURSAL CÓRDOBA",
     "coords": [18.8833, -96.9333],
-    "direccion": "Calle 3 No. Ext. B, Col. San Nicolás, C.P. 94540, Córdoba, Ver.",
-    "telefonoDisplay": "(271) 717-5807",
-    "telefonoLink": "+522717175807",
+    "direccion": "Calle 3 No. B, Col. San Nicolas C.P. 94540",
+    "telefonoDisplay": "271 710 8478",
+    "telefonoLink": "+522717108478",
     "email": "cotizacion@vixa.mx",
-    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=18.8833,-96.9333"
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=18.8833,-96.9333",
+    "telefonosAdicionales": ["271 710 8467"]
+  },
+  {
+    "id": 6,
+    "nombre": "SUCURSAL ORIZABA",
+    "coords": [18.8500, -97.1000],
+    "direccion": "Norte 2 N. 1587, Col. Centro C.P. 94300",
+    "telefonoDisplay": "272 688 9034",
+    "telefonoLink": "+522726889034",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=18.8500,-97.1000",
+    "telefonosAdicionales": ["272 688 8432", "272 341 8313"]
+  },
+  {
+    "id": 7,
+    "nombre": "SUCURSAL TUXTLA GUTIERREZ",
+    "coords": [16.7500, -93.1167],
+    "direccion": "Calzada Emiliano Zapata No. 940, Col Teran C.P. 29050",
+    "telefonoDisplay": "961 657 1119",
+    "telefonoLink": "+529616571119",
+    "email": "cotizacion@vixa.mx",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=16.7500,-93.1167",
+    "telefonosAdicionales": ["961 170 2616", "961 105 5309"]
   }
 ]

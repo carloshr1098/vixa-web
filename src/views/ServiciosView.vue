@@ -1,0 +1,54 @@
+<template>
+  <div class="py-16 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Procesos Especializados</h2>
+        <p class="mt-4 text-xl text-slate-600">Transformación avanzada de vidrio con los más altos estándares de calidad.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        
+        <div class="bg-slate-50 rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+          <img src="@/assets/doble.png" alt="Doble Acristalamiento" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Doble Acristalamiento</h3>
+            <p class="text-slate-600 leading-relaxed">Sistema de dos vidrios con cámara de aire deshidratado. Máximo aislamiento térmico y ahorro de energía.</p>
+          </div>
+        </div>
+        
+        <div class="bg-slate-50 rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+          <img src="@/assets/templado.png" alt="Vidrio Templado" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Vidrio Templado</h3>
+            <p class="text-slate-600 leading-relaxed">Procesado térmicamente para ser 5 veces más resistente. La mejor opción en seguridad y durabilidad para cada proyecto.</p>
+          </div>
+        </div>
+        
+        <div class="bg-slate-50 rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+          <img src="@/assets/laminado.png" alt="Vidrio Laminado" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Vidrio Laminado</h3>
+            <p class="text-slate-600 leading-relaxed">Seguridad extrema antirotura mediante películas de PVB. Ideal para fachadas, domos y control acústico avanzado.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+          <img src="@/assets/cantopulido.png" alt="Canto Pulido" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Canto Pulido</h3>
+            <p class="text-slate-600 leading-relaxed">Acabado brillante y suave que elimina filos, aportando elegancia y seguridad total a cada pieza de vidrio expuesta.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-3xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+          <img src="@/assets/esmerilado.png" alt="Esmerilado" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Esmerilado</h3>
+            <p class="text-slate-600 leading-relaxed">Efecto translúcido de alta precisión que permite el paso de luz manteniendo la privacidad en oficinas y áreas residenciales.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
