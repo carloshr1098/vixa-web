@@ -4,14 +4,14 @@ import sucursalesData from '../data/sucursales.json'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// 🛠️ ARREGLO DE MARCADORES PARA VITE
-// Esto soluciona que no aparezcan los iconos azules
-import icon from 'leaflet/dist/images/marker-icon.png'
-import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+// ✅ USAMOS ESTO EN LUGAR DE LOS IMPORTS DIRECTOS
+// Esto evita el error de Rollup durante el build
+const iconUrl = new URL('leaflet/dist/images/marker-icon.png', import.meta.url).href
+const shadowUrl = new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).href
 
 let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
+  iconUrl: iconUrl,
+  shadowUrl: shadowUrl,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
