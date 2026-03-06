@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import productosData from '../data/productos.json' // ¡Aquí importamos la base de datos!
+import productosData from '../data/productos.json'
 
 const categorias = ref(['Todos', 'Vidrio', 'Herrajes'])
 const categoriaActiva = ref('Todos')
@@ -11,13 +11,17 @@ const tituloSeccion = computed(() => {
   return 'Nuestros Productos Líderes en la Industria'
 })
 
-// Cargamos los datos del JSON a nuestra variable reactiva
 const productos = ref(productosData)
 
 const productosFiltrados = computed(() => {
   if (categoriaActiva.value === 'Todos') return productos.value
   return productos.value.filter(p => p.categoria === categoriaActiva.value)
 })
+
+// FUNCIÓN PARA CARGAR IMÁGENES DINÁMICAMENTE EN VITE
+const getImageUrl = (name: string) => {
+  return new URL(`../assets/${name}`, import.meta.url).href
+}
 </script>
 
 <template>
@@ -50,8 +54,14 @@ const productosFiltrados = computed(() => {
           :key="producto.id"
           class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group cursor-pointer"
         >
-          <div class="h-32 flex items-center justify-center border-b border-slate-100 bg-white">
-            <span :class="producto.logoStyle">{{ producto.logoTxt }}</span>
+          <div class="h-40 flex items-center justify-center border-b border-slate-100 bg-white p-6">
+            <img 
+              v-if="producto.logo" 
+              :src="getImageUrl(producto.logo)" 
+              :alt="producto.nombre"
+              class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110"
+            />
+            <span v-else :class="producto.logoStyle">{{ producto.logoTxt }}</span>
           </div>
           
           <div class="p-6 flex flex-col flex-grow bg-white">
@@ -59,7 +69,7 @@ const productosFiltrados = computed(() => {
             <p class="text-sm text-slate-600 flex-grow leading-relaxed mb-6">{{ producto.desc }}</p>
             
             <a 
-              href="https://wa.me/522299208830?text=Hola,%20quiero%20información%20sobre%20los%20productos" 
+              :href="`https://wa.me/522299208830?text=Hola,%20quiero%20información%20sobre%20${producto.nombre}`" 
               target="_blank"
               class="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition inline-flex items-center gap-2"
             >

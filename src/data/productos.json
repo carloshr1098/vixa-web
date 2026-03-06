@@ -1,36 +1,32 @@
 [
 
-  {
+{
     "id": 1,
     "nombre": "Familia Evo",
     "categoria": "Vidrio",
     "desc": "Experimente un confort térmico inigualable. Esta tecnología filtra inteligentemente los rayos solares, manteniendo sus espacios frescos e iluminados mientras reduce drásticamente el consumo de aire acondicionado.",
-    "logoTxt": "EVO",
-    "logoStyle": "text-3xl font-light tracking-widest text-slate-500"
+    "logo": "EVO.webp"
   },
   {
     "id": 2,
     "nombre": "Timeless",
     "categoria": "Vidrio",
     "desc": "Transparencia que perdura. Su tratamiento especializado repele el agua y previene la corrosión, garantizando canceles de baño con un brillo impecable y un mantenimiento mínimo a lo largo del tiempo.",
-    "logoTxt": "TIMELESS",
-    "logoStyle": "text-3xl font-black italic tracking-tighter text-blue-800"
+    "logo": "Timeless.png"
   },
   {
     "id": 3,
     "nombre": "Bioclean",
     "categoria": "Vidrio",
     "desc": "Fachadas siempre perfectas con tecnología de autolimpieza. Su recubrimiento hidrofílico aprovecha la acción del sol y la lluvia para desintegrar la suciedad, optimizando los costos de mantenimiento exterior.",
-    "logoTxt": "BIOCLEAN",
-    "logoStyle": "text-2xl font-bold tracking-wide text-cyan-600"
+    "logo": "Bioclean.png"
   },
   {
     "id": 4,
     "nombre": "Cool-lite",
     "categoria": "Vidrio",
     "desc": "La elección definitiva para la arquitectura sustentable. Ofrece un aislamiento térmico superior y una estética vanguardista, ideal para corporativos que buscan eficiencia energética y certificación LEED.",
-    "logoTxt": "Cool-Lite",
-    "logoStyle": "text-3xl font-bold italic tracking-tight text-blue-900"
+    "logo": "CoolLite.png"
   },
   {
     "id": 9,
