@@ -19,8 +19,8 @@ export const useCotizadorStore = defineStore('cotizador', () => {
     tipoVidrio: ''
   })
 
-  const avanzarPaso = () => {
-    // NUEVA LÓGICA: Si estás en Medidas (3) y no necesitas herrajes, salta al Resumen (5)
+const avanzarPaso = () => {
+    // Si estamos en Medidas (3) y es Puerta o Fijo, saltamos Detalles (4) y vamos a Procesos (5)
     if (pasoActual.value === 3 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
       pasoActual.value = 5
     } else {
@@ -29,7 +29,7 @@ export const useCotizadorStore = defineStore('cotizador', () => {
   }
 
   const retrocederPaso = () => {
-    // NUEVA LÓGICA: Si estás en el Resumen (5) y eres puerta/fijo, regresa a Medidas (3)
+    // Si estamos en Procesos (5) y es Puerta o Fijo, regresamos directo a Medidas (3)
     if (pasoActual.value === 5 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
       pasoActual.value = 3
     } else if (pasoActual.value > 1) {

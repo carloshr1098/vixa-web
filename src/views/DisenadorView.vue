@@ -26,6 +26,10 @@ const tipoMedida = ref('')
 const aceptoMedidas = ref(false)
 const familiaSeleccionada = ref<Familia | null>(null)
 
+// NUEVO: Variables para los procesos
+const listaProcesos = ['Templado', 'Laminado', 'Canto Pulido', 'Esmerilado', 'Doble Acristalamiento']
+const procesosSeleccionados = ref<string[]>([]) // Guarda los procesos que el cliente palomea
+
 const instalaciones = [
   { id: 'cancel', nombre: 'Cancel de Baño', icono: '🚿', desc: 'Sistemas corredizos o abatibles para duchas.' },
   { id: 'puerta', nombre: 'Puerta Abatible', icono: '🚪', desc: 'Puertas de interior o exterior con bisagras.' },
@@ -68,7 +72,7 @@ const familiasVidrio: Familia[] = [
       { nombre: 'Parsol Verde', clase: 'bg-green-700' }
     ]
   },
-{
+  {
     id: 'CoolLite',
     nombre: 'Cool-Lite',
     desc: 'Vidrio de control solar avanzado. Nota: En templado solo disponible en 6mm.',
@@ -101,11 +105,10 @@ const familiasVidrio: Familia[] = [
     id: 'Reflectivos',
     nombre: 'Reflectivos / Espejo',
     desc: 'Vidrio con recubrimiento reflectante. Ideal para diseño de interiores y espejos.',
-    espesores: ['6mm'], // ¡El sistema lo bloquea en 6mm en automático!
+    espesores: ['6mm'], 
     variantes: [
       { 
         nombre: 'Luna (Espejo)', 
-        // Le ponemos un gradiente plateado para que simule el efecto de un espejo real
         clase: 'bg-gradient-to-br from-slate-100 via-slate-300 to-slate-400 border border-slate-300' 
       }
     ]
@@ -183,8 +186,12 @@ const enlaceWhatsApp = computed(() => {
     detallesTexto = `\n* Plantilla:* ${p.detalles.plantilla === 'si' ? 'El cliente proporcionará plantilla' : 'Sin plantilla'}`
   }
 
-  // Versión limpia, profesional y sin emojis para garantizar compatibilidad
-  const mensaje = `¡Hola equipo de VIXA!\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n* Proyecto:* ${instalacionNombre}\n* Vidrio Elegido:* ${p.tipoVidrio} (${p.detalles.espesor})\n* Medidas:* ${p.medidas.ancho} x ${p.medidas.alto} cm\n* Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}\n\n¿Me podrían apoyar con la cotización?`
+  // Preparamos el texto de los procesos seleccionados
+  const procesosTexto = procesosSeleccionados.value.length > 0 
+    ? `\n* Procesos Extra:* ${procesosSeleccionados.value.join(', ')}` 
+    : '\n* Procesos Extra:* Ninguno'
+
+  const mensaje = `¡Hola equipo de VIXA!\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n* Proyecto:* ${instalacionNombre}\n* Vidrio Elegido:* ${p.tipoVidrio} (${p.detalles.espesor})\n* Medidas:* ${p.medidas.ancho} x ${p.medidas.alto} cm\n* Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}${procesosTexto}\n\n¿Me podrían apoyar con la cotización?`
   
   return `https://wa.me/5212299782548?text=${encodeURIComponent(mensaje)}`
 })
@@ -196,9 +203,9 @@ const enlaceWhatsApp = computed(() => {
       
       <div class="text-center mb-10">
         <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Diseña tu Espacio</h2>
-        <p class="mt-4 text-lg text-slate-600 font-medium">Paso {{ store.pasoActual }} de 5</p>
+        <p class="mt-4 text-lg text-slate-600 font-medium">Paso {{ store.pasoActual }} de 6</p>
         <div class="w-full bg-slate-200 rounded-full h-2.5 mt-6 max-w-md mx-auto overflow-hidden">
-          <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="`width: ${(store.pasoActual / 5) * 100}%`"></div>
+          <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="`width: ${(store.pasoActual / 6) * 100}%`"></div>
         </div>
       </div>
 
@@ -354,12 +361,31 @@ const enlaceWhatsApp = computed(() => {
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Regresar</button>
           
           <button @click="store.avanzarPaso" :disabled="paso4Incompleto" :class="['px-8 py-3 rounded-lg font-bold transition-all duration-300', !paso4Incompleto ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' : 'bg-slate-200 text-slate-400 cursor-not-allowed w-full sm:w-auto']">
-            Ver Resumen de Cotización &rarr;
+            Siguiente Paso &rarr;
           </button>
         </div>
       </div>
 
       <div v-else-if="store.pasoActual === 5" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in max-w-2xl mx-auto">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">¿Requiere procesos adicionales?</h3>
+        <p class="text-slate-500 text-sm text-center mb-8">Selecciona todos los que apliquen para tu cristal.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+           <label v-for="proceso in listaProcesos" :key="proceso" class="flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 group" :class="procesosSeleccionados.includes(proceso) ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-slate-200 hover:bg-slate-50'">
+              <input type="checkbox" :value="proceso" v-model="procesosSeleccionados" class="w-5 h-5 text-blue-600 bg-slate-100 border-slate-300 rounded focus:ring-blue-600 focus:ring-2">
+              <span class="ml-3 font-bold text-slate-700 group-hover:text-blue-700 transition-colors">{{ proceso }}</span>
+           </label>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mt-10">
+          <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Regresar</button>
+          <button @click="store.avanzarPaso" class="px-8 py-3 rounded-lg font-bold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 shadow-md w-full sm:w-auto">
+            Ver Resumen de Cotización &rarr;
+          </button>
+        </div>
+      </div>
+
+      <div v-else-if="store.pasoActual === 6" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in max-w-2xl mx-auto">
         <h3 class="text-2xl font-black text-slate-800 mb-6 text-center">Resumen de tu Proyecto</h3>
         
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 mb-8 space-y-4 text-slate-700">
@@ -392,6 +418,13 @@ const enlaceWhatsApp = computed(() => {
            <div class="pt-4 border-t border-slate-200 mt-2" v-if="['barandal', 'formas'].includes(store.proyecto.tipoInstalacion)">
              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Plantilla</p>
              <p class="font-bold text-slate-800">{{ store.proyecto.detalles.plantilla === 'si' ? 'Se enviará plantilla' : 'No cuenta con plantilla' }}</p>
+           </div>
+
+           <div class="pt-4 border-t border-slate-200 mt-2">
+             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Procesos</p>
+             <p class="font-bold text-slate-800">
+               {{ procesosSeleccionados.length > 0 ? procesosSeleccionados.join(', ') : 'Ninguno seleccionado' }}
+             </p>
            </div>
         </div>
 
