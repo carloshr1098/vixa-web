@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import * as pdfjsLib from 'pdfjs-dist'
 
-// Configuración del Worker para que PDF.js funcione en Vite
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+// ✅ CONFIGURACIÓN BLINDADA (Usamos un worker externo para evitar errores)
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
 
 const form = ref({
   nombre: '',
@@ -15,29 +15,18 @@ const form = ref({
 const isLoading = ref(false)
 const status = ref('')
 
-// --- MOTOR DE EXTRACCIÓN GRATUITO (REGEX) ---
 const extraerDatos = (text: string) => {
-  // 1. Extraer Email
   const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
   const emailMatch = text.match(emailRegex)
-  
-  // 2. Extraer Teléfono (formatos comunes de México)
   const phoneRegex = /(?:\+?52\s?)?(?:\d{3}[\s-]?\d{3}[\s-]?\d{4}|\d{10})/
   const phoneMatch = text.match(phoneRegex)
-
-  // 3. Extraer Nombre (Lógica: Suele ser la primera línea o palabras en mayúsculas al inicio)
-  // Limpiamos espacios extra y tomamos las primeras 3-4 palabras
   const lineas = text.split('\n').map(l => l.trim()).filter(l => l.length > 0)
-  const posibleNombre = lineas[0]?.substring(0, 50) || "No detectado"
-
-  // 4. Resumen (Tomamos un fragmento del inicio para que el usuario lo edite)
-  const resumenCercano = text.substring(0, 300).replace(/\s+/g, ' ') + "..."
-
+  
   return {
-    nombre: posibleNombre,
+    nombre: lineas[0]?.substring(0, 50) || "Candidato VIXA",
     email: emailMatch ? emailMatch[0] : '',
     telefono: phoneMatch ? phoneMatch[0] : '',
-    resumen: resumenCercano
+    resumen: text.substring(0, 250) + "..."
   }
 }
 
@@ -46,45 +35,42 @@ const handleFileUpload = async (event: Event) => {
   if (!file) return
 
   isLoading.value = true
-  status.value = "Leyendo documento..."
+  status.value = "Leyendo CV..."
 
   try {
     const arrayBuffer = await file.arrayBuffer()
-    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer })
-    const pdf = await loadingTask.promise
+    // Cambiamos la forma de cargar para que sea más compatible
+    const loadingTask = pdfjsLib.getDocument({
+      data: arrayBuffer,
+      useWorkerFetch: true,
+      isEvalSupported: false
+    })
     
+    const pdf = await loadingTask.promise
     let fullText = ""
+    
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i)
       const content = await page.getTextContent()
-      const pageText = content.items.map((item: any) => item.str).join(' ')
+      // @ts-ignore
+      const pageText = content.items.map((item) => item.str).join(' ')
       fullText += pageText + "\n"
     }
 
-    status.value = "Procesando información..."
-    
-    // Aplicamos nuestro "Parser" gratuito
-    const datosRecuperados = extraerDatos(fullText)
-    
-    form.value = {
-      nombre: datosRecuperados.nombre,
-      email: datosRecuperados.email,
-      telefono: datosRecuperados.telefono,
-      resumen: datosRecuperados.resumen
+    if (fullText.trim().length === 0) {
+      throw new Error("El PDF parece estar vacío o ser una imagen")
     }
 
-    status.value = "✅ ¡Listo! Revisa tus datos."
+    const datos = extraerDatos(fullText)
+    form.value = datos
+    status.value = "✅ ¡Datos extraídos!"
+    
   } catch (error) {
-    console.error(error)
-    status.value = "❌ Error al leer el PDF."
+    console.error("Error técnico:", error)
+    status.value = "❌ ERROR AL LEER EL PDF. Intenta con otro archivo."
   } finally {
     isLoading.value = false
   }
-}
-
-const enviarRH = () => {
-  alert(`Enviando postulación de ${form.value.nombre} a Recursos Humanos VIXA`)
-  // Aquí integrarías EmailJS
 }
 </script>
 
