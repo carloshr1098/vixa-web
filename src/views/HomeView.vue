@@ -59,7 +59,7 @@ const mostrarModalCV = ref(false) // 👈 Controla si el formulario se ve o no
   @click.prevent="mostrarModalCV = true" 
   class="inline-block w-full py-4 rounded-xl font-bold text-slate-900 bg-blue-400 hover:bg-blue-300 transform hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-blue-400/30 cursor-pointer"
 > 
-  Enviar mi Currículum 
+  Enviarr mi Currículum 
 </button>
             </div>
           </div> 
