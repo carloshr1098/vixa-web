@@ -72,5 +72,52 @@
     "logoTxt": "HERRALUM",
     "logoStyle": "text-2xl font-bold tracking-widest text-slate-800"
   }
-
+{
+    "id": 12,
+    "nombre": "Cuprum",
+    "categoria": "Herrajes",
+    "desc": "Líder en perfiles de aluminio arquitectónico. Sistemas de ventanas y puertas con la mayor resistencia estructural y acabados premium para proyectos residenciales y comerciales.",
+    "logoTxt": "CUPRUM",
+    "logoStyle": "text-3xl font-black tracking-tighter text-blue-700"
+  },
+  {
+    "id": 13,
+    "nombre": "Plásticos Madison",
+    "categoria": "Herrajes",
+    "desc": "Especialistas en componentes plásticos y sellos para cancelería. Soluciones de hermeticidad y protección que garantizan un funcionamiento suave y duradero en cada instalación.",
+    "logoTxt": "MADISON",
+    "logoStyle": "text-2xl font-bold tracking-widest text-orange-600"
+  },
+  {
+    "id": 14,
+    "nombre": "Herrajes TecnoMX",
+    "categoria": "Herrajes",
+    "desc": "Innovación en accesorios para vidrio templado. Una amplia gama de clips, conectores y sistemas de sujeción con diseños vanguardistas y alta resistencia mecánica.",
+    "logoTxt": "TecnoMX",
+    "logoStyle": "text-2xl font-semibold tracking-tight text-slate-600"
+  },
+  {
+    "id": 15,
+    "nombre": "Herrajes Comenza",
+    "categoria": "Herrajes",
+    "desc": "Sistemas de barandales y herrajes de diseño europeo. Elegancia y seguridad en acero inoxidable para espacios modernos, cumpliendo con las normativas internacionales más estrictas.",
+    "logoTxt": "comenza",
+    "logoStyle": "text-3xl font-light lowercase tracking-tighter text-slate-800"
+  },
+  {
+    "id": 16,
+    "nombre": "Ryobi",
+    "categoria": "Herrajes",
+    "desc": "Tecnología japonesa en cierrapuertas y controles de apertura. Funcionamiento hidráulico de alta precisión para un cierre suave y seguro en todo tipo de puertas arquitectónicas.",
+    "logoTxt": "RYOBI",
+    "logoStyle": "text-2xl font-black italic tracking-normal text-red-600"
+  },
+  {
+    "id": 17,
+    "nombre": "Herrajes Dorma",
+    "categoria": "Herrajes",
+    "desc": "Sistemas globales de control de accesos y herrajes de cristal. Reconocida por sus frenos de piso y soluciones para puertas automáticas que definen el estándar de la industria.",
+    "logoTxt": "DORMA",
+    "logoStyle": "text-2xl font-bold tracking-widest text-red-700"
+  }
 ]

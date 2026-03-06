@@ -10,7 +10,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "ship": "git add . && git commit -m 'update' && git push origin main && npm run deploy"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
