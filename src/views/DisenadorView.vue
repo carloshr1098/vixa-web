@@ -71,7 +71,7 @@ const familiasVidrio: Familia[] = [
 {
     id: 'CoolLite',
     nombre: 'Cool-Lite',
-    desc: 'Cristal de control solar avanzado. Nota: En templado solo disponible en 6mm.',
+    desc: 'Vidrio de control solar avanzado. Nota: En templado solo disponible en 6mm.',
     espesores: ['6mm'],
     variantes: [
       { nombre: 'Cool-Lite SKN', clase: 'bg-sky-100 border border-sky-200' },
@@ -100,7 +100,7 @@ const familiasVidrio: Familia[] = [
   {
     id: 'Reflectivos',
     nombre: 'Reflectivos / Espejo',
-    desc: 'Cristal con recubrimiento reflectante. Ideal para diseño de interiores y espejos.',
+    desc: 'Vidrio con recubrimiento reflectante. Ideal para diseño de interiores y espejos.',
     espesores: ['6mm'], // ¡El sistema lo bloquea en 6mm en automático!
     variantes: [
       { 
@@ -372,7 +372,7 @@ const enlaceWhatsApp = computed(() => {
            
            <div class="grid grid-cols-2 gap-4 pt-2">
              <div>
-               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cristal</p>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Vidrio</p>
                <p class="font-bold text-slate-800">{{ store.proyecto.tipoVidrio }} ({{ store.proyecto.detalles.espesor }})</p>
              </div>
              <div>
