@@ -175,15 +175,16 @@ const enlaceWhatsApp = computed(() => {
   let detallesTexto = ''
   if (p.tipoInstalacion === 'cancel') {
     if (p.detalles.tipoCancel === 'corredizo') {
-      detallesTexto = `\n*⚙️ Sistema:* Cancel Corredizo\n*🛠️ Herraje:* ${p.detalles.sistemaCorredizo}`
+      detallesTexto = `\n*🔸 Sistema:* Cancel Corredizo\n*🔸 Herraje:* ${p.detalles.sistemaCorredizo}`
     } else {
-      detallesTexto = `\n*⚙️ Sistema:* Cancel Abatible`
+      detallesTexto = `\n*🔸 Sistema:* Cancel Abatible`
     }
   } else if (['barandal', 'formas'].includes(p.tipoInstalacion)) {
-    detallesTexto = `\n*📐 Plantilla:* ${p.detalles.plantilla === 'si' ? 'El cliente proporcionará plantilla' : 'Sin plantilla'}`
+    detallesTexto = `\n*🔸 Plantilla:* ${p.detalles.plantilla === 'si' ? 'El cliente proporcionará plantilla' : 'Sin plantilla'}`
   }
 
-  const mensaje = `¡Hola equipo de VIXA! 👋\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n*📌 Proyecto:* ${instalacionNombre}\n*🪟 Vidrio Elegido:* ${p.tipoVidrio} (${p.detalles.espesor})\n*📏 Medidas:* ${p.medidas.ancho} cm x ${p.medidas.alto} cm\n*📐 Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}\n\n¿Me podrían apoyar con la cotización?`
+  // Usamos emojis universales que no se rompen en ningún compilador
+  const mensaje = `¡Hola equipo de VIXA! 👋\nMe gustaría cotizar un proyecto diseñado desde su sitio web:\n\n*🔹 Proyecto:* ${instalacionNombre}\n*🔹 Vidrio Elegido:* ${p.tipoVidrio} (${p.detalles.espesor})\n*🔹 Medidas:* ${p.medidas.ancho} x ${p.medidas.alto} cm\n*🔹 Tipo de Medida:* ${tipoMedidaTexto}${detallesTexto}\n\n¿Me podrían apoyar con la cotización?`
   
   return `https://wa.me/5212299782548?text=${encodeURIComponent(mensaje)}`
 })
