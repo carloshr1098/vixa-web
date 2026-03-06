@@ -127,4 +127,20 @@ const handleFileUpload = async (event: Event) => {
       </div>
     </div>
   </div>
+  <Teleport to="body">
+      <div v-if="mostrarModalCV" class="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" @click="mostrarModalCV = false"></div>
+        
+        <div class="relative bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200">
+          <button 
+            @click="mostrarModalCV = false" 
+            class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 z-50 p-2"
+          >
+            <span class="text-2xl font-bold">✕</span>
+          </button>
+          
+          <EnviarCVView /> 
+        </div>
+      </div>
+    </Teleport>
 </template>
