@@ -98,6 +98,19 @@ const familiasVidrio: Familia[] = [
     ]
   },
   {
+    id: 'Reflectivos',
+    nombre: 'Reflectivos / Espejo',
+    desc: 'Cristal con recubrimiento reflectante. Ideal para diseño de interiores y espejos.',
+    espesores: ['6mm'], // ¡El sistema lo bloquea en 6mm en automático!
+    variantes: [
+      { 
+        nombre: 'Luna (Espejo)', 
+        // Le ponemos un gradiente plateado para que simule el efecto de un espejo real
+        clase: 'bg-gradient-to-br from-slate-100 via-slate-300 to-slate-400 border border-slate-300' 
+      }
+    ]
+  },
+  {
     id: 'Clasicos',
     nombre: 'Clásicos',
     desc: 'Vidrio claro y extra claro de alta resistencia.',
@@ -330,7 +343,7 @@ const enlaceWhatsApp = computed(() => {
               <label class="flex-1 cursor-pointer group p-4 rounded-xl border-2 text-center transition-all" :class="store.proyecto.detalles.plantilla === 'no' ? 'border-blue-600 bg-blue-50' : 'border-slate-200 hover:bg-slate-50'">
                 <input type="radio" v-model="store.proyecto.detalles.plantilla" value="no" class="hidden">
                 <span class="block text-2xl mb-2">❌</span>
-                <span class="font-bold text-slate-800">No tengo</span>
+                <span class="font-bold text-slate-800">No se requiere</span>
               </label>
             </div>
           </div>
