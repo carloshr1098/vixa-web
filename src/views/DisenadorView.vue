@@ -2,6 +2,11 @@
 import { computed, ref } from 'vue'
 import { useCotizadorStore } from '../stores/cotizador'
 
+// FUNCIÓN PARA CARGAR IMÁGENES DINÁMICAMENTE
+const getImageUrl = (name: string) => {
+  return new URL(`../assets/${name}`, import.meta.url).href
+}
+
 interface Variante {
   nombre: string;
   clase: string;
@@ -18,7 +23,7 @@ interface Familia {
 const store = useCotizadorStore()
 
 const tipoMedida = ref('') 
-const aceptoMedidas = ref(false) // Regresamos tu variable de aceptación
+const aceptoMedidas = ref(false)
 const familiaSeleccionada = ref<Familia | null>(null)
 
 const instalaciones = [
@@ -44,7 +49,7 @@ const familiasVidrio: Familia[] = [
   {
     id: 'SolLite',
     nombre: 'Sol-Lite',
-    desc: 'Protección solar eficiente. Nota: En templado solo disponible en 6mm.',
+    desc: 'Protección solar eficiente. En templado solo disponible en 6mm.',
     espesores: ['6mm'],
     variantes: [
       { nombre: 'Sol-Lite Gris', clase: 'bg-gray-500' },
@@ -91,29 +96,27 @@ const seleccionarVariante = (nombre: string) => {
   store.proyecto.tipoVidrio = nombre
 }
 
-const mensajeErrorMedidas = computed(() => {
+const errorMedidas = computed(() => {
   const ancho = store.proyecto.medidas.ancho
   const alto = store.proyecto.medidas.alto
-  if (!ancho || !alto) return ''
-  const min = Math.min(ancho, alto), max = Math.max(ancho, alto)
-  if (min < 20 || max < 30) return 'La medida mínima de templado es de 20 cm x 30 cm.'
-  if (min > 240 || max > 500) return 'La medida excede la capacidad máxima de nuestro horno (500 cm x 240 cm).'
+  if (!ancho || !alto) return 'Por favor, ingresa el ancho y el alto para continuar.'
+  const ladoCorto = Math.min(ancho, alto)
+  const ladoLargo = Math.max(ancho, alto)
+  if (ladoCorto < 20 || ladoLargo < 30) return 'La medida mínima de templado es de 20 cm x 30 cm.'
+  if (ladoCorto > 240 || ladoLargo > 500) return 'La medida excede la capacidad máxima de nuestro horno (500 cm x 240 cm).'
   return ''
 })
 
-const tieneErrorCritico = computed(() => mensajeErrorMedidas.value !== '')
-const medidasIncompletas = computed(() => !store.proyecto.medidas.ancho || !store.proyecto.medidas.alto)
+const tieneErrorMedidas = computed(() => errorMedidas.value !== '' && errorMedidas.value !== 'Por favor, ingresa el ancho y el alto para continuar.')
 
 const bloquearCaracteres = (event: KeyboardEvent) => {
   if (['-', '+', 'e', 'E'].includes(event.key)) { event.preventDefault() }
 }
 
-// Actualizamos esta validación para el nuevo Paso 4
-const detallesIncompletos = computed(() => {
+const paso4Incompleto = computed(() => {
   const d = store.proyecto.detalles
   if (store.proyecto.tipoInstalacion === 'cancel') {
     if (!d.tipoCancel) return true
-    // Ya no pedimos espesor aquí porque ya lo eligió en el Paso 2
     if (d.tipoCancel === 'corredizo' && !d.sistemaCorredizo) return true
   }
   if (['barandal', 'formas'].includes(store.proyecto.tipoInstalacion)) {
@@ -145,34 +148,33 @@ const enlaceWhatsApp = computed(() => {
 </script>
 
 <template>
-  <div class="py-12 bg-slate-50 min-h-screen font-sans">
+  <div class="py-12 bg-slate-50 min-h-screen">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Diseña tu Espacio</h2>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Diseña tu Espacio</h2>
         <p class="mt-4 text-lg text-slate-600 font-medium">Paso {{ store.pasoActual }} de 4</p>
-        <div class="w-full bg-slate-200 h-2.5 mt-6 max-w-md mx-auto rounded-full overflow-hidden">
-          <div class="bg-blue-600 h-full transition-all duration-700" :style="`width: ${(store.pasoActual / 4) * 100}%`"></div>
+        <div class="w-full bg-slate-200 rounded-full h-2.5 mt-6 max-w-md mx-auto overflow-hidden">
+          <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="`width: ${(store.pasoActual / 4) * 100}%`"></div>
         </div>
       </div>
 
       <div v-if="store.pasoActual === 1" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in max-w-4xl mx-auto">
         <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">¿Qué proyecto tienes en mente?</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <button v-for="item in instalaciones" :key="item.id" @click="seleccionarInstalacion(item.id)" 
-            :class="['p-6 rounded-xl border-2 text-left transition-all duration-200 flex flex-col group', store.proyecto.tipoInstalacion === item.id ? 'border-blue-600 bg-blue-50 shadow-md transform scale-[1.02]' : 'border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50']">
+          <button v-for="item in instalaciones" :key="item.id" @click="seleccionarInstalacion(item.id)" :class="['p-6 rounded-xl border-2 text-left transition-all duration-200 flex flex-col group', store.proyecto.tipoInstalacion === item.id ? 'border-blue-600 bg-blue-50 shadow-md transform scale-[1.02]' : 'border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50']">
             <span class="text-4xl mb-4 group-hover:scale-110 transition-transform">{{ item.icono }}</span>
             <span class="text-lg font-bold text-slate-900 mb-1">{{ item.nombre }}</span>
             <span class="text-sm text-slate-500 leading-relaxed">{{ item.desc }}</span>
           </button>
         </div>
         <div class="mt-10 flex justify-end">
-          <button @click="store.avanzarPaso" :disabled="!store.proyecto.tipoInstalacion" class="px-8 py-3 rounded-lg font-bold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed">Continuar al Paso 2 &rarr;</button>
+          <button @click="store.avanzarPaso" :disabled="!store.proyecto.tipoInstalacion" :class="['px-8 py-3 rounded-lg font-bold transition-all duration-300', store.proyecto.tipoInstalacion ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' : 'bg-slate-200 text-slate-400 cursor-not-allowed']">Continuar al Paso 2 &rarr;</button>
         </div>
       </div>
 
       <div v-else-if="store.pasoActual === 2" class="animate-fade-in">
-        <h3 class="text-center font-bold text-slate-400 uppercase text-[10px] tracking-widest mb-6">Selecciona la tecnología y espesor del vidrio</h3>
+        <h3 class="text-xl font-bold text-slate-800 mb-8 text-center">Elige tu tipo de vidrio y espesor</h3>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
            <button v-for="fam in familiasVidrio" :key="fam.id" @click="seleccionarFamilia(fam)"
@@ -181,31 +183,31 @@ const enlaceWhatsApp = computed(() => {
            </button>
         </div>
 
-        <div v-if="familiaSeleccionada" class="bg-white p-10 rounded-[40px] shadow-2xl border border-slate-100 animate-fade-in mb-10 text-center">
-           <p class="text-slate-500 text-xs font-medium mb-8 italic">{{ familiaSeleccionada.desc }}</p>
+        <div v-if="familiaSeleccionada" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in mb-8 text-center">
+           <p class="text-slate-500 text-sm mb-6">{{ familiaSeleccionada.desc }}</p>
            
-           <div class="flex flex-wrap justify-center gap-10">
+           <div class="flex flex-wrap justify-center gap-8">
               <div v-for="v in familiaSeleccionada.variantes" :key="v.nombre" @click="seleccionarVariante(v.nombre)" class="group cursor-pointer flex flex-col items-center">
-                 <div :class="[v.clase, 'w-20 h-20 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] ring-offset-4 transition-all duration-300', store.proyecto.tipoVidrio === v.nombre ? 'ring-4 ring-blue-600 scale-110' : 'hover:scale-105 opacity-70 hover:opacity-100']"></div>
-                 <span :class="['mt-4 text-[10px] font-black uppercase tracking-tighter', store.proyecto.tipoVidrio === v.nombre ? 'text-blue-600' : 'text-slate-400']">{{ v.nombre }}</span>
+                 <div :class="[v.clase, 'w-16 h-16 rounded-full shadow-inner ring-offset-4 transition-all duration-300', store.proyecto.tipoVidrio === v.nombre ? 'ring-2 ring-blue-600 scale-110' : 'hover:scale-105']"></div>
+                 <span :class="['mt-3 text-xs font-bold transition-colors', store.proyecto.tipoVidrio === v.nombre ? 'text-blue-600' : 'text-slate-500']">{{ v.nombre }}</span>
               </div>
            </div>
 
-           <div class="mt-12 pt-8 border-t border-slate-50">
-              <p class="text-[9px] font-bold text-slate-400 uppercase mb-4 tracking-widest">Espesores Disponibles</p>
-              <div class="flex justify-center gap-3">
+           <div class="mt-8 pt-6 border-t border-slate-100">
+              <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Espesores Disponibles</p>
+              <div class="flex justify-center gap-4">
                  <button v-for="esp in familiaSeleccionada.espesores" :key="esp" 
                    @click="store.proyecto.detalles.espesor = esp as string"
-                   :class="['px-6 py-2 rounded-full text-xs font-bold transition-all', store.proyecto.detalles.espesor === esp ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-100 text-slate-400 hover:bg-slate-200']">
+                   :class="['px-6 py-2 rounded-full font-bold text-sm transition-all', store.proyecto.detalles.espesor === esp ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200']">
                    {{ esp }}
                  </button>
               </div>
            </div>
         </div>
 
-        <div class="flex justify-between items-center bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+        <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">&larr; Regresar</button>
-          <button @click="store.avanzarPaso" :disabled="!store.proyecto.tipoVidrio || !store.proyecto.detalles.espesor" class="px-8 py-3 rounded-lg font-bold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed">Continuar al Paso 3 &rarr;</button>
+          <button @click="store.avanzarPaso" :disabled="!store.proyecto.tipoVidrio || !store.proyecto.detalles.espesor" :class="['px-8 py-3 rounded-lg font-bold transition-all duration-300', store.proyecto.tipoVidrio && store.proyecto.detalles.espesor ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' : 'bg-slate-200 text-slate-400 cursor-not-allowed']">Continuar al Paso 3 &rarr;</button>
         </div>
       </div>
 
@@ -222,12 +224,9 @@ const enlaceWhatsApp = computed(() => {
               <input type="number" min="0" @keydown="bloquearCaracteres" v-model.number="store.proyecto.medidas.alto" class="block w-full rounded-lg border-slate-300 border px-4 py-3 focus:border-blue-600 focus:ring-blue-600 text-lg transition-colors outline-none" placeholder="Ej. 210">
             </div>
           </div>
+          <div class="min-h-[20px] text-center"><p v-if="errorMedidas" class="text-sm font-semibold" :class="errorMedidas.includes('Por favor') ? 'text-slate-500' : 'text-red-600'">{{ errorMedidas }}</p></div>
           
-          <div class="min-h-[20px] text-center">
-            <p v-if="tieneErrorCritico" class="text-sm font-semibold text-red-600">{{ mensajeErrorMedidas }}</p>
-          </div>
-          
-          <div v-if="!tieneErrorCritico && !medidasIncompletas" class="mt-6 border-t border-slate-100 pt-6 animate-fade-in">
+          <div v-if="!tieneErrorMedidas && store.proyecto.medidas.ancho" class="mt-6 border-t border-slate-100 pt-6 animate-fade-in">
             <label class="block text-sm font-bold text-slate-700 mb-4">¿A qué corresponden estas medidas?</label>
             <div class="space-y-3">
               <label class="flex items-start cursor-pointer group p-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors" :class="{'bg-blue-50 border-blue-200': tipoMedida === 'fabricacion'}">
@@ -240,25 +239,22 @@ const enlaceWhatsApp = computed(() => {
               </label>
             </div>
           </div>
-          
-          <div v-if="tipoMedida && !tieneErrorCritico && !medidasIncompletas" class="mt-4 p-4 bg-blue-50/50 border border-blue-100 rounded-lg animate-fade-in">
+          <div v-if="tipoMedida && !tieneErrorMedidas && store.proyecto.medidas.ancho" class="mt-4 p-4 bg-blue-50/50 border border-blue-100 rounded-lg animate-fade-in">
             <label class="flex items-center cursor-pointer">
               <input type="checkbox" v-model="aceptoMedidas" class="w-5 h-5 rounded text-blue-600 border-slate-300 focus:ring-blue-600">
               <span class="ml-3 text-sm font-bold text-blue-900 leading-tight">Acepto que las medidas son de {{ tipoMedida }}.</span>
             </label>
           </div>
         </div>
-        
         <div class="mt-10 flex justify-between items-center">
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">&larr; Regresar</button>
-          <button @click="store.avanzarPaso" :disabled="tieneErrorCritico || medidasIncompletas || !tipoMedida || !aceptoMedidas" class="px-8 py-3 rounded-lg font-bold transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 shadow-md disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed">Continuar al Paso 4 &rarr;</button>
+          <button @click="store.avanzarPaso" :disabled="!!tieneErrorMedidas || !store.proyecto.medidas.ancho || !tipoMedida || !aceptoMedidas" :class="['px-8 py-3 rounded-lg font-bold transition-all duration-300', (!tieneErrorMedidas && store.proyecto.medidas.ancho && tipoMedida && aceptoMedidas) ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' : 'bg-slate-200 text-slate-400 cursor-not-allowed']">Siguiente Paso &rarr;</button>
         </div>
       </div>
 
       <div v-else-if="store.pasoActual === 4" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in max-w-2xl mx-auto">
         <h3 class="text-xl font-bold text-slate-800 mb-8 text-center">Detalles de Especificación</h3>
         <div class="space-y-8">
-          
           <div v-if="store.proyecto.tipoInstalacion === 'cancel'" class="space-y-8 animate-fade-in">
             <label class="block text-base font-bold text-slate-700 mb-4 text-center">¿Qué tipo de apertura requiere tu cancel?</label>
             <div class="flex gap-4">
@@ -274,21 +270,23 @@ const enlaceWhatsApp = computed(() => {
               </label>
             </div>
             
-            <div v-if="store.proyecto.detalles.tipoCancel === 'corredizo'" class="animate-fade-in border-t border-slate-100 pt-6">
-              <label class="block text-sm font-bold text-slate-700 mb-2">Selecciona el sistema para tu vidrio de {{ store.proyecto.detalles.espesor }}:</label>
-              <select v-model="store.proyecto.detalles.sistemaCorredizo" class="block w-full rounded-lg border-slate-300 border px-4 py-3 outline-none bg-white font-medium text-slate-700 cursor-pointer">
-                <option value="" disabled>Elige un sistema...</option>
-                <template v-if="store.proyecto.detalles.espesor === '6mm'">
-                  <option value="Sistema Corredizo Bruken">Sistema Corredizo Bruken</option>
-                  <option value="Sistema Acuario">Sistema Acuario</option>
-                </template>
-                <template v-if="store.proyecto.detalles.espesor === '10mm'">
-                  <option value="Sistema Libra">Sistema Libra</option>
-                  <option value="Sistema Bacalar">Sistema Bacalar</option>
-                  <option value="Sistema Cozumel">Sistema Cozumel</option>
-                  <option value="Sistema Oaxaca">Sistema Oaxaca</option>
-                </template>
-              </select>
+            <div v-if="store.proyecto.detalles.tipoCancel === 'corredizo'" class="space-y-6 animate-fade-in border-t border-slate-100 pt-6">
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2">Selecciona el sistema corredizo (para {{ store.proyecto.detalles.espesor }}):</label>
+                <select v-model="store.proyecto.detalles.sistemaCorredizo" class="block w-full rounded-lg border-slate-300 border px-4 py-3 outline-none bg-white font-medium text-slate-700 cursor-pointer">
+                  <option value="" disabled>Elige un sistema...</option>
+                  <template v-if="store.proyecto.detalles.espesor === '6mm'">
+                    <option value="Sistema Corredizo Bruken">Sistema Corredizo Bruken</option>
+                    <option value="Sistema Acuario">Sistema Acuario</option>
+                  </template>
+                  <template v-if="store.proyecto.detalles.espesor === '10mm'">
+                    <option value="Sistema Libra">Sistema Libra</option>
+                    <option value="Sistema Bacalar">Sistema Bacalar</option>
+                    <option value="Sistema Cozumel">Sistema Cozumel</option>
+                    <option value="Sistema Oaxaca">Sistema Oaxaca</option>
+                  </template>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -308,14 +306,14 @@ const enlaceWhatsApp = computed(() => {
             </div>
           </div>
         </div>
-
-        <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6 border-t pt-8">
+        
+        <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Regresar</button>
           
-          <a v-if="!detallesIncompletos" :href="enlaceWhatsApp" target="_blank" class="px-8 py-4 rounded-lg font-extrabold text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 w-full sm:w-auto justify-center animate-fade-in">
+          <a v-if="!paso4Incompleto" :href="enlaceWhatsApp" target="_blank" class="px-8 py-4 rounded-lg font-extrabold text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 w-full sm:w-auto justify-center animate-fade-in">
             <span>Enviar Cotización por WhatsApp</span>
           </a>
-          <button v-else disabled class="px-8 py-4 rounded-lg font-bold text-slate-400 bg-slate-200 cursor-not-allowed w-full sm:w-auto">Completa los detalles para cotizar</button>
+          <button v-else disabled class="px-8 py-4 rounded-lg font-bold text-slate-400 bg-slate-200 cursor-not-allowed w-full sm:w-auto">Completa los detalles</button>
         </div>
       </div>
 
