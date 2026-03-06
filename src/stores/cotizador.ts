@@ -12,7 +12,7 @@ export const useCotizadorStore = defineStore('cotizador', () => {
     },
     detalles: {
       tipoCancel: '',       
-      espesor: '',          // ¡NUEVO! Guardaremos '6mm' o '10mm'
+      espesor: '',          
       sistemaCorredizo: '', 
       plantilla: ''         
     },
@@ -20,16 +20,18 @@ export const useCotizadorStore = defineStore('cotizador', () => {
   })
 
   const avanzarPaso = () => {
-    if (pasoActual.value === 2 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
-      pasoActual.value = 4
+    // NUEVA LÓGICA: Si estás en Medidas (3) y no necesitas herrajes, salta al Resumen (5)
+    if (pasoActual.value === 3 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
+      pasoActual.value = 5
     } else {
       pasoActual.value++
     }
   }
 
   const retrocederPaso = () => {
-    if (pasoActual.value === 4 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
-      pasoActual.value = 2
+    // NUEVA LÓGICA: Si estás en el Resumen (5) y eres puerta/fijo, regresa a Medidas (3)
+    if (pasoActual.value === 5 && ['puerta', 'fijo'].includes(proyecto.value.tipoInstalacion)) {
+      pasoActual.value = 3
     } else if (pasoActual.value > 1) {
       pasoActual.value--
     }
