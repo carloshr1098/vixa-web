@@ -181,9 +181,9 @@ const enlaceWhatsApp = computed(() => {
       
       <div class="text-center mb-10">
         <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Diseña tu Espacio</h2>
-        <p class="mt-4 text-lg text-slate-600 font-medium">Paso {{ store.pasoActual }} de 4</p>
+        <p class="mt-4 text-lg text-slate-600 font-medium">Paso {{ store.pasoActual }} de 5</p>
         <div class="w-full bg-slate-200 rounded-full h-2.5 mt-6 max-w-md mx-auto overflow-hidden">
-          <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="`width: ${(store.pasoActual / 4) * 100}%`"></div>
+          <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="`width: ${(store.pasoActual / 5) * 100}%`"></div>
         </div>
       </div>
 
@@ -337,10 +337,62 @@ const enlaceWhatsApp = computed(() => {
         
         <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
           <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Regresar</button>
-          <a v-if="!paso4Incompleto" :href="enlaceWhatsApp" target="_blank" class="px-8 py-4 rounded-lg font-extrabold text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 w-full sm:w-auto justify-center animate-fade-in">
-            <span>Enviar Cotización por WhatsApp</span>
+          
+          <button @click="store.avanzarPaso" :disabled="paso4Incompleto" :class="['px-8 py-3 rounded-lg font-bold transition-all duration-300', !paso4Incompleto ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' : 'bg-slate-200 text-slate-400 cursor-not-allowed w-full sm:w-auto']">
+            Ver Resumen de Cotización &rarr;
+          </button>
+        </div>
+      </div>
+
+      <div v-else-if="store.pasoActual === 5" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 animate-fade-in max-w-2xl mx-auto">
+        <h3 class="text-2xl font-black text-slate-800 mb-6 text-center">Resumen de tu Proyecto</h3>
+        
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 mb-8 space-y-4 text-slate-700">
+           <div class="flex items-center gap-4 pb-4 border-b border-slate-200">
+             <span class="text-4xl">{{ instalaciones.find(i => i.id === store.proyecto.tipoInstalacion)?.icono }}</span>
+             <div>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Proyecto</p>
+               <p class="text-lg font-bold text-slate-900">{{ instalaciones.find(i => i.id === store.proyecto.tipoInstalacion)?.nombre }}</p>
+             </div>
+           </div>
+           
+           <div class="grid grid-cols-2 gap-4 pt-2">
+             <div>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cristal</p>
+               <p class="font-bold text-slate-800">{{ store.proyecto.tipoVidrio }} ({{ store.proyecto.detalles.espesor }})</p>
+             </div>
+             <div>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Medidas</p>
+               <p class="font-bold text-slate-800">{{ store.proyecto.medidas.ancho }} x {{ store.proyecto.medidas.alto }} cm</p>
+               <p class="text-xs text-slate-500">{{ tipoMedida === 'fabricacion' ? 'Fabricación exacta' : 'Medida de vano' }}</p>
+             </div>
+           </div>
+
+           <div class="pt-4 border-t border-slate-200 mt-2" v-if="store.proyecto.tipoInstalacion === 'cancel'">
+             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sistema</p>
+             <p class="font-bold text-slate-800 capitalize">Cancel {{ store.proyecto.detalles.tipoCancel }}</p>
+             <p class="text-sm text-slate-600" v-if="store.proyecto.detalles.tipoCancel === 'corredizo'">Herraje: {{ store.proyecto.detalles.sistemaCorredizo }}</p>
+           </div>
+           
+           <div class="pt-4 border-t border-slate-200 mt-2" v-if="['barandal', 'formas'].includes(store.proyecto.tipoInstalacion)">
+             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Plantilla</p>
+             <p class="font-bold text-slate-800">{{ store.proyecto.detalles.plantilla === 'si' ? 'Se enviará plantilla' : 'No cuenta con plantilla' }}</p>
+           </div>
+        </div>
+
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8">
+          <p class="text-[11px] text-blue-800 font-medium">
+            <strong class="uppercase font-black">¡Casi listo!</strong> Revisa que todo esté correcto. Al dar clic en enviar, tu solicitud llegará por WhatsApp y un asesor de VIXA procesará tu cotización exacta.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+          <button @click="store.retrocederPaso" class="px-6 py-3 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors w-full sm:w-auto text-center">&larr; Modificar datos</button>
+          
+          <a :href="enlaceWhatsApp" target="_blank" class="px-8 py-4 rounded-lg font-extrabold text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 w-full sm:w-auto justify-center animate-fade-in">
+            <span class="text-2xl">💬</span>
+            <span>Enviar a WhatsApp</span>
           </a>
-          <button v-else disabled class="px-8 py-4 rounded-lg font-bold text-slate-400 bg-slate-200 cursor-not-allowed w-full sm:w-auto">Completa los detalles</button>
         </div>
       </div>
 
