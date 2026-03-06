@@ -1,119 +1,100 @@
 [
-
-{
+  {
     "id": 1,
     "nombre": "Familia Evo",
     "categoria": "Vidrio",
-    "desc": "Experimente un confort térmico inigualable. Esta tecnología filtra inteligentemente los rayos solares, manteniendo sus espacios frescos e iluminados mientras reduce drásticamente el consumo de aire acondicionado.",
+    "desc": "Confort térmico inigualable. Filtra los rayos solares manteniendo espacios frescos y reduciendo el consumo de aire acondicionado.",
     "logo": "EVO.webp"
   },
   {
     "id": 2,
     "nombre": "Timeless",
     "categoria": "Vidrio",
-    "desc": "Transparencia que perdura. Su tratamiento especializado repele el agua y previene la corrosión, garantizando canceles de baño con un brillo impecable y un mantenimiento mínimo a lo largo del tiempo.",
+    "desc": "Transparencia permanente. Tratamiento que repele el agua y previene la corrosión en canceles de baño.",
     "logo": "Timeless.png"
   },
   {
     "id": 3,
     "nombre": "Bioclean",
     "categoria": "Vidrio",
-    "desc": "Fachadas siempre perfectas con tecnología de autolimpieza. Su recubrimiento hidrofílico aprovecha la acción del sol y la lluvia para desintegrar la suciedad, optimizando los costos de mantenimiento exterior.",
+    "desc": "Tecnología de autolimpieza. Usa el sol y la lluvia para desintegrar la suciedad en fachadas.",
     "logo": "Bioclean.png"
   },
   {
     "id": 4,
     "nombre": "Cool-lite",
     "categoria": "Vidrio",
-    "desc": "La elección definitiva para la arquitectura sustentable. Ofrece un aislamiento térmico superior y una estética vanguardista, ideal para corporativos que buscan eficiencia energética y certificación LEED.",
+    "desc": "Sustentabilidad avanzada. Aislamiento térmico superior para edificios con certificación LEED.",
     "logo": "CoolLite.png"
-  },
-  {
-    "id": 9,
-    "nombre": "Vidrio Claro",
-    "categoria": "Vidrio",
-    "desc": "La esencia de la transparencia arquitectónica. Vidrio flotado de alta pureza que garantiza una transmisión de luz máxima y una visión nítida, siendo el lienzo perfecto y la base estructural para cualquier proyecto.",
-    "logoTxt": "CLARO",
-    "logoStyle": "text-3xl font-light tracking-widest text-slate-400"
   },
   {
     "id": 5,
     "nombre": "Vidrios de Color",
     "categoria": "Vidrio",
-    "desc": "Transforme la atmósfera de sus proyectos. Nuestra gama entintada combina un diseño arquitectónico audaz con un sutil control del deslumbramiento, creando espacios interiores llenos de carácter y sofisticación.",
-    "logoTxt": "COLOR",
-    "logoStyle": "text-3xl font-semibold tracking-wide text-emerald-600"
+    "desc": "Gama entintada para diseño audaz y control de deslumbramiento en interiores.",
+    "logo": "laminado.png"
   },
   {
     "id": 6,
     "nombre": "Vidrios Reflectivos",
     "categoria": "Vidrio",
-    "desc": "Privacidad y vanguardia en una sola pieza. Su elegante acabado tipo espejo protege los interiores de las miradas diurnas y rechaza el calor solar exterior, elevando el valor estético de cualquier fachada.",
-    "logoTxt": "REFLECTIVO",
-    "logoStyle": "text-2xl font-bold tracking-widest text-slate-700"
+    "desc": "Privacidad diurna y rechazo de calor solar con un elegante acabado espejo.",
+    "logo": "esmerilado.png"
   },
- {
+  {
     "id": 7,
     "nombre": "Bruken",
     "categoria": "Herrajes",
-    "desc": "Distribuidor oficial. Herrajes, conectores y accesorios de precisión con los más altos estándares de calidad para instalaciones de vidrio arquitectónico.",
-    "logoTxt": "BRUKEN",
-    "logoStyle": "text-2xl font-bold tracking-widest text-red-600"
+    "desc": "Herrajes de precisión y accesorios de acero inoxidable para instalaciones de vidrio templado.",
+    "logo": "herrajes.png"
   },
   {
     "id": 8,
     "nombre": "Herralum",
     "categoria": "Herrajes",
-    "desc": "Línea completa de herrajes, perfiles y accesorios especializados. Soluciones integrales para la sujeción y funcionamiento de sistemas de vidrio.",
-    "logoTxt": "HERRALUM",
-    "logoStyle": "text-2xl font-bold tracking-widest text-slate-800"
+    "desc": "Línea nacional líder en perfiles y herrajes especializados para la industria del cristal.",
+    "logo": "herrajes.png"
   },
-{
+  {
     "id": 12,
     "nombre": "Cuprum",
     "categoria": "Herrajes",
-    "desc": "Líder en perfiles de aluminio arquitectónico. Sistemas de ventanas y puertas con la mayor resistencia estructural y acabados premium para proyectos residenciales y comerciales.",
-    "logoTxt": "CUPRUM",
-    "logoStyle": "text-3xl font-black tracking-tighter text-blue-700"
+    "desc": "Perfiles de aluminio arquitectónico de alta resistencia para ventanas y puertas residenciales.",
+    "logo": "cuprum.png"
   },
   {
     "id": 13,
     "nombre": "Plásticos Madison",
     "categoria": "Herrajes",
-    "desc": "Especialistas en componentes plásticos y sellos para cancelería. Soluciones de hermeticidad y protección que garantizan un funcionamiento suave y duradero en cada instalación.",
-    "logoTxt": "MADISON",
-    "logoStyle": "text-2xl font-bold tracking-widest text-orange-600"
+    "desc": "Sellos y componentes plásticos que garantizan hermeticidad en cancelería de aluminio.",
+    "logo": "madison.png"
   },
   {
     "id": 14,
     "nombre": "Herrajes TecnoMX",
     "categoria": "Herrajes",
-    "desc": "Innovación en accesorios para vidrio templado. Una amplia gama de clips, conectores y sistemas de sujeción con diseños vanguardistas y alta resistencia mecánica.",
-    "logoTxt": "TecnoMX",
-    "logoStyle": "text-2xl font-semibold tracking-tight text-slate-600"
+    "desc": "Innovación en conectores y clips de sujeción mecánica para proyectos de vanguardia.",
+    "logo": "tecnomx.png"
   },
   {
     "id": 15,
     "nombre": "Herrajes Comenza",
     "categoria": "Herrajes",
-    "desc": "Sistemas de barandales y herrajes de diseño europeo. Elegancia y seguridad en acero inoxidable para espacios modernos, cumpliendo con las normativas internacionales más estrictas.",
-    "logoTxt": "comenza",
-    "logoStyle": "text-3xl font-light lowercase tracking-tighter text-slate-800"
+    "desc": "Sistemas de barandales europeos en acero inoxidable con los más altos estándares de diseño.",
+    "logo": "comenza.png"
   },
   {
     "id": 16,
     "nombre": "Ryobi",
     "categoria": "Herrajes",
-    "desc": "Tecnología japonesa en cierrapuertas y controles de apertura. Funcionamiento hidráulico de alta precisión para un cierre suave y seguro en todo tipo de puertas arquitectónicas.",
-    "logoTxt": "RYOBI",
-    "logoStyle": "text-2xl font-black italic tracking-normal text-red-600"
+    "desc": "Cierrapuertas hidráulicos de precisión japonesa para un control de apertura suave y seguro.",
+    "logo": "ryobi.png"
   },
   {
     "id": 17,
     "nombre": "Herrajes Dorma",
     "categoria": "Herrajes",
-    "desc": "Sistemas globales de control de accesos y herrajes de cristal. Reconocida por sus frenos de piso y soluciones para puertas automáticas que definen el estándar de la industria.",
-    "logoTxt": "DORMA",
-    "logoStyle": "text-2xl font-bold tracking-widest text-red-700"
+    "desc": "Frenos de piso y soluciones globales para control de acceso en puertas de cristal.",
+    "logo": "dorma.png"
   }
 ]
