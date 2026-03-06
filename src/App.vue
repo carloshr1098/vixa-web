@@ -7,7 +7,7 @@ const isMenuOpen = ref(false)
 
 // Función para cerrar el menú al hacer clic en un link
 const closeMenu = () => {
-  isMenuOpen.ref = false
+  isMenuOpen.value = false
 }
 </script>
 
