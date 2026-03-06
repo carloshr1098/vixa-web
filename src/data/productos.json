@@ -46,21 +46,21 @@
     "nombre": "Bruken",
     "categoria": "Herrajes",
     "desc": "Herrajes de precisión y accesorios de acero inoxidable para instalaciones de vidrio templado.",
-    "logo": "herrajes.png"
+    "logo": "Bruken.png"
   },
   {
     "id": 8,
     "nombre": "Herralum",
     "categoria": "Herrajes",
     "desc": "Línea nacional líder en perfiles y herrajes especializados para la industria del cristal.",
-    "logo": "herrajes.png"
+    "logo": "Herralum.png"
   },
   {
     "id": 12,
     "nombre": "Cuprum",
     "categoria": "Herrajes",
     "desc": "Perfiles de aluminio arquitectónico de alta resistencia para ventanas y puertas residenciales.",
-    "logo": "cuprum.png"
+    "logo": "Cuprum.webp"
   },
   {
     "id": 13,
@@ -88,7 +88,7 @@
     "nombre": "Ryobi",
     "categoria": "Herrajes",
     "desc": "Cierrapuertas hidráulicos de precisión japonesa para un control de apertura suave y seguro.",
-    "logo": "ryobi.png"
+    "logo": "Ryobi.png"
   },
   {
     "id": 17,
