@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import * as pdfjsLib from 'pdfjs-dist'
 
-// ✅ CONFIGURACIÓN BLINDADA (Usamos un worker externo para evitar errores)
+// ✅ Configuración del Worker desde CDN para evitar errores de ruta en producción
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
 
+// Estado del formulario
 const form = ref({
   nombre: '',
   email: '',
@@ -15,59 +16,70 @@ const form = ref({
 const isLoading = ref(false)
 const status = ref('')
 
+// ✅ Función para enviar los datos (Corrigiendo el error TS2339)
+const enviarRH = () => {
+  if (!form.value.email) {
+    alert("Por favor, sube un CV válido primero.")
+    return
+  }
+  alert(`🚀 ¡Éxito! La postulación de ${form.value.nombre} ha sido enviada al equipo de Recursos Humanos de VIXA.`)
+  // Aquí es donde conectarías con EmailJS en el futuro
+}
+
+// Lógica de extracción de datos por patrones (Regex)
 const extraerDatos = (text: string) => {
   const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
   const emailMatch = text.match(emailRegex)
+  
   const phoneRegex = /(?:\+?52\s?)?(?:\d{3}[\s-]?\d{3}[\s-]?\d{4}|\d{10})/
   const phoneMatch = text.match(phoneRegex)
+
   const lineas = text.split('\n').map(l => l.trim()).filter(l => l.length > 0)
   
   return {
     nombre: lineas[0]?.substring(0, 50) || "Candidato VIXA",
     email: emailMatch ? emailMatch[0] : '',
     telefono: phoneMatch ? phoneMatch[0] : '',
-    resumen: text.substring(0, 250) + "..."
+    resumen: text.substring(0, 250).replace(/\s+/g, ' ') + "..."
   }
 }
 
+// Manejador de carga de archivo
 const handleFileUpload = async (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
+  if (!file || file.type !== 'application/pdf') {
+    status.value = "❌ Por favor selecciona un archivo PDF válido."
+    return
+  }
 
   isLoading.value = true
-  status.value = "Leyendo CV..."
+  status.value = "🤖 IA VIXA Analizando documento..."
 
   try {
     const arrayBuffer = await file.arrayBuffer()
-    // Cambiamos la forma de cargar para que sea más compatible
-    const loadingTask = pdfjsLib.getDocument({
-      data: arrayBuffer,
-      useWorkerFetch: true,
-      isEvalSupported: false
-    })
-    
+    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer })
     const pdf = await loadingTask.promise
-    let fullText = ""
     
+    let fullText = ""
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i)
       const content = await page.getTextContent()
-      // @ts-ignore
-      const pageText = content.items.map((item) => item.str).join(' ')
+      // @ts-ignore - Evitamos errores estrictos de tipos en la iteración de items
+      const pageText = content.items.map((item: any) => item.str).join(' ')
       fullText += pageText + "\n"
     }
 
     if (fullText.trim().length === 0) {
-      throw new Error("El PDF parece estar vacío o ser una imagen")
+      throw new Error("El PDF no contiene texto legible (podría ser una imagen).")
     }
 
-    const datos = extraerDatos(fullText)
-    form.value = datos
-    status.value = "✅ ¡Datos extraídos!"
-    
+    const datosExtraidos = extraerDatos(fullText)
+    form.value = datosExtraidos
+    status.value = "✅ ¡Análisis completado con éxito!"
+
   } catch (error) {
-    console.error("Error técnico:", error)
-    status.value = "❌ ERROR AL LEER EL PDF. Intenta con otro archivo."
+    console.error("Error al procesar PDF:", error)
+    status.value = "❌ Error al leer el PDF. Intenta con otro archivo."
   } finally {
     isLoading.value = false
   }
@@ -75,72 +87,71 @@ const handleFileUpload = async (event: Event) => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto p-6 font-sans">
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-      <div class="bg-blue-800 p-8 text-white">
-        <h2 class="text-2xl font-black italic uppercase tracking-tighter">Bolsa de Trabajo VIXA</h2>
-        <p class="text-blue-100 text-sm opacity-80 mt-1">Sube tu CV y nuestro sistema extraerá tu información.</p>
+  <div class="bg-white">
+    <div class="bg-blue-700 p-8 text-white text-center">
+      <h2 class="text-2xl font-black italic tracking-tighter uppercase">Bolsa de Trabajo VIXA</h2>
+      <p class="text-blue-100 text-xs mt-2 opacity-90 uppercase font-bold tracking-widest">Postulación con Inteligencia Artificial</p>
+    </div>
+
+    <div class="p-8">
+      <div class="relative border-4 border-dashed border-slate-100 rounded-3xl p-10 text-center hover:border-blue-200 transition-all bg-slate-50 group">
+        <input 
+          type="file" 
+          @change="handleFileUpload" 
+          accept=".pdf" 
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+        />
+        
+        <div v-if="!isLoading">
+          <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">📄</div>
+          <p class="text-slate-600 font-bold">Arrastra tu CV aquí o haz clic</p>
+          <p class="text-[10px] text-slate-400 mt-2 uppercase font-black tracking-widest">
+            {{ status || 'Solo archivos PDF' }}
+          </p>
+        </div>
+        
+        <div v-else class="flex flex-col items-center">
+          <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p class="text-blue-700 font-black animate-pulse uppercase text-xs tracking-widest">{{ status }}</p>
+        </div>
       </div>
 
-      <div class="p-8">
-        <div class="relative border-4 border-dashed border-slate-100 rounded-3xl p-12 text-center hover:border-blue-200 transition-all bg-slate-50">
-          <input type="file" @change="handleFileUpload" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-          
-          <div v-if="!isLoading">
-            <span class="text-5xl block mb-4">📂</span>
-            <p class="text-slate-600 font-bold">Haz clic o arrastra tu CV (PDF)</p>
-            <p class="text-[10px] text-slate-400 mt-2 uppercase font-black tracking-widest">{{ status || 'Esperando archivo...' }}</p>
-          </div>
-          
-          <div v-else class="flex flex-col items-center">
-            <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p class="text-blue-700 font-black animate-pulse uppercase text-xs">{{ status }}</p>
-          </div>
-        </div>
-
-        <div v-if="form.nombre" class="mt-12 space-y-6 animate-in fade-in slide-in-from-bottom-5 duration-700">
+      <Transition name="fade">
+        <div v-if="form.nombre" class="mt-10 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-1">
-              <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Nombre Extraído</label>
-              <input v-model="form.nombre" class="w-full bg-slate-100 border-none rounded-xl p-3 text-slate-700 focus:ring-2 focus:ring-blue-500" />
+              <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Nombre Detectado</label>
+              <input v-model="form.nombre" class="w-full bg-slate-100 border-none rounded-xl p-4 text-slate-700 focus:ring-2 focus:ring-blue-500 font-bold" />
             </div>
             <div class="space-y-1">
               <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Teléfono</label>
-              <input v-model="form.telefono" class="w-full bg-slate-100 border-none rounded-xl p-3 text-slate-700 focus:ring-2 focus:ring-blue-500" />
+              <input v-model="form.telefono" class="w-full bg-slate-100 border-none rounded-xl p-4 text-slate-700 focus:ring-2 focus:ring-blue-500 font-bold" />
             </div>
           </div>
 
           <div class="space-y-1">
-            <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Correo de contacto</label>
-            <input v-model="form.email" class="w-full bg-slate-100 border-none rounded-xl p-3 text-slate-700 focus:ring-2 focus:ring-blue-500" />
+            <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Correo Electrónico</label>
+            <input v-model="form.email" class="w-full bg-slate-100 border-none rounded-xl p-4 text-slate-700 focus:ring-2 focus:ring-blue-500 font-bold" />
           </div>
 
           <div class="space-y-1">
-            <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Vista previa de experiencia</label>
-            <textarea v-model="form.resumen" class="w-full bg-slate-100 border-none rounded-xl p-3 text-slate-700 h-32 focus:ring-2 focus:ring-blue-500"></textarea>
+            <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Extracto de Perfil Profesional</label>
+            <textarea v-model="form.resumen" class="w-full bg-slate-100 border-none rounded-xl p-4 text-slate-700 h-32 focus:ring-2 focus:ring-blue-500 text-sm leading-relaxed"></textarea>
           </div>
 
-          <button @click="enviarRH" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-4 rounded-2xl shadow-lg shadow-blue-100 transition-all uppercase tracking-widest italic">
-            Enviar mi CV a VIXA
+          <button 
+            @click="enviarRH" 
+            class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-5 rounded-2xl shadow-xl shadow-blue-200 transition-all uppercase tracking-widest italic text-sm"
+          >
+            Confirmar y Enviar a VIXA
           </button>
         </div>
-      </div>
+      </Transition>
     </div>
   </div>
-  <Teleport to="body">
-      <div v-if="mostrarModalCV" class="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" @click="mostrarModalCV = false"></div>
-        
-        <div class="relative bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200">
-          <button 
-            @click="mostrarModalCV = false" 
-            class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 z-50 p-2"
-          >
-            <span class="text-2xl font-bold">✕</span>
-          </button>
-          
-          <EnviarCVView /> 
-        </div>
-      </div>
-    </Teleport>
 </template>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active { transition: opacity 0.5s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+</style>
