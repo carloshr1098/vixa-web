@@ -32,14 +32,14 @@
     "nombre": "Vidrios de Color",
     "categoria": "Vidrio",
     "desc": "Gama entintada para diseño audaz y control de deslumbramiento en interiores.",
-    "logo": "colores.png"
+    "logo": "saint.png"
   },
   {
     "id": 6,
     "nombre": "Vidrios Reflectivos",
     "categoria": "Vidrio",
     "desc": "Privacidad diurna y rechazo de calor solar con un elegante acabado espejo.",
-    "logo": "reflectivo.png"
+    "logo": "saint.png"
   },
   {
     "id": 7,
