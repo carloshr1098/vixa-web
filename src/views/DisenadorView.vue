@@ -82,9 +82,10 @@ const seleccionarInstalacion = (id: string) => {
 const seleccionarFamilia = (fam: Familia) => {
   familiaSeleccionada.value = fam
   store.proyecto.tipoVidrio = '' 
-  // Usamos una validación simple para asegurar que el valor existe
+  
+  // Agregamos "as string" al final para forzar la compatibilidad
   if (fam.espesores && fam.espesores.length > 0) {
-    store.proyecto.detalles.espesor = fam.espesores[0]
+    store.proyecto.detalles.espesor = fam.espesores[0] as string
   }
 }
 
